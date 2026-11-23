@@ -1,0 +1,27 @@
+/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Resource-Policy: same-origin
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/ort/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/models/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Domaine principal : HTTPS obligatoire pour les visites suivantes (HSTS)
+https://agrandir-image.fr/*
+  Strict-Transport-Security: max-age=31536000
+
+# Préversions workers.dev : jamais indexées (le site canonique est agrandir-image.fr)
+https://:name.enzo-valvasori.workers.dev/*
+  X-Robots-Tag: noindex

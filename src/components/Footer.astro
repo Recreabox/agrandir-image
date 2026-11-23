@@ -1,0 +1,28 @@
+---
+import { TOOLS, coelusLink } from '../lib/site';
+---
+<footer class="ftr">
+  <div class="wrap">
+    <nav class="ftr__tools" aria-label="Outils">
+      {TOOLS.map((t) => (<a href={t.href}>{t.short}</a>))}
+      <a href="/blog/">Blog</a>
+    </nav>
+    <div class="ftr__bottom">
+      <p>© 2026 Agrandir Image · <a href="/mentions-legales/">Mentions légales</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/credits/">Crédits</a></p>
+      <p>Fait à Montpellier par <a class="ftr__coelus" href={coelusLink('/', 'footer')} rel="noopener">Coelus</a></p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ftr { margin-top: 96px; padding: 28px 0 32px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+  .ftr__tools { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 0; }
+  .ftr__tools a { color: var(--muted); text-decoration: none; white-space: nowrap; }
+  .ftr__tools a + a::before { content: '·'; display: inline-block; margin: 0 10px; color: var(--faint); }
+  .ftr__tools a:hover { color: var(--ink); }
+  .ftr__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; margin-top: 20px; }
+  .ftr__bottom a { color: var(--muted); text-decoration: none; }
+  .ftr__bottom a:hover { color: var(--ink); text-decoration: underline; }
+  .ftr__bottom .ftr__coelus { color: var(--primary); font-weight: 500; }
+  @media (max-width: 640px) { .ftr__bottom { justify-content: center; text-align: center; } }
+</style>

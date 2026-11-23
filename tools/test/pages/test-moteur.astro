@@ -1,0 +1,31 @@
+---
+// Page technique de test du moteur (non indexée, retirée du sitemap). Utilisée par tools/test/e2e_engine.py.
+---
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8" /><meta name="robots" content="noindex" /><title>Test moteur</title></head>
+<body>
+<pre id="log">chargement…</pre>
+<script>
+  import { getClient } from '../lib/upscale/client';
+  const log = (s: string) => { document.getElementById('log')!.textContent += '\n' + s; };
+  let pre: Blob | null = null;
+  (window as any).__engine = {
+    async caps() { return await getClient().caps(); },
+    async prefetch(url: string) { pre = await (await fetch(url)).blob(); return pre.size; },
+    async run(url: string, opts: { modelId: string; targetW: number; targetH: number; mime: string; quality: number; engine: string }) {
+      const blob = url ? await (await fetch(url)).blob() : pre!;
+      const bmp = await createImageBitmap(blob);
+      const stages: string[] = [];
+      const { promise } = getClient().upscale(opts as any, bmp, (p) => { const s = p.stage + ':' + p.done + '/' + p.total; if (!stages.length || !stages[stages.length - 1].startsWith(p.stage)) stages.push(s); else stages[stages.length - 1] = s; }, (n) => log('notice ' + n));
+      const r = await promise;
+      const buf = new Uint8Array(await r.blob.arrayBuffer());
+      let bin = '';
+      for (let i = 0; i < buf.length; i += 0x8000) bin += String.fromCharCode(...buf.subarray(i, i + 0x8000));
+      return { width: r.width, height: r.height, ms: r.ms, backend: r.backend, mime: r.mime, bytes: buf.length, stages, b64: btoa(bin) };
+    },
+  };
+  log('prêt, isolé=' + crossOriginIsolated);
+</script>
+</body>
+</html>

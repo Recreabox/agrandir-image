@@ -1,0 +1,16 @@
+---
+import Base from './Base.astro';
+interface Props { title: string; description: string; h1: string; slug: string }
+const { title, description, h1, slug } = Astro.props;
+---
+<Base title={title} description={description} crumbs={[{ name: h1, href: '/' + slug + '/' }]}>
+  <article class="page">
+    <h1>{h1}</h1>
+    <div class="prose"><slot /></div>
+  </article>
+</Base>
+<style>
+  .page { width: min(100% - 32px, var(--text)); margin: 0 auto; padding-top: 48px; }
+  .page h1 { margin-bottom: 28px; font-size: 30px; font-weight: 700; letter-spacing: -0.02em; }
+  @media (max-width: 640px) { .page h1 { font-size: 25px; } }
+</style>

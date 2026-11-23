@@ -1,0 +1,52 @@
+---
+import Page from '../layouts/Page.astro';
+---
+<Page title="Crédits et licences" description="Le modèle d’IA Real-ESRGAN, ONNX Runtime Web et les images d’exemple utilisés par Agrandir Image, avec leurs licences." h1="Crédits et licences" slug="credits">
+  <p>Agrandir Image repose sur des logiciels et des modèles libres. Merci à leurs auteurs. Leur mention ici ne signifie pas qu’ils soutiennent ou recommandent ce site.</p>
+  <h2>Modèles d’IA : Real-ESRGAN</h2>
+  <p>Les modèles realesr-general-x4v3, realesr-animevideov3, RealESRGAN_x4plus et RealESRGAN_x4plus_anime_6B proviennent du dépôt <a href="https://github.com/xinntao/Real-ESRGAN" rel="noopener">xinntao/Real-ESRGAN</a>. Ils ont été convertis au format ONNX sans autre modification. Publication de référence : Xintao Wang, Liangbin Xie, Chao Dong, Ying Shan, « Real-ESRGAN: Training Real-World Blind Super-Resolution with Pure Synthetic Data », ICCV Workshops 2021.</p>
+  <pre>BSD 3-Clause License
+
+Copyright (c) 2021, Xintao Wang
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</pre>
+  <h2>Logiciels</h2>
+  <ul>
+    <li><a href="https://github.com/microsoft/onnxruntime" rel="noopener">ONNX Runtime Web</a> : exécution du modèle dans le navigateur, © Microsoft Corporation, licence MIT.</li>
+    <li><a href="https://astro.build/" rel="noopener">Astro</a> et <a href="https://svelte.dev/" rel="noopener">Svelte</a> : construction du site, licence MIT.</li>
+    <li><a href="https://github.com/101arrowz/fflate" rel="noopener">fflate</a> : archives ZIP, licence MIT.</li>
+    <li>Logo dessiné avec la police <a href="https://github.com/vercel/geist-font" rel="noopener">Geist</a>, © The Geist Project Authors, licence SIL Open Font License 1.1.</li>
+  </ul>
+  <h2>Images d’exemple</h2>
+  <ul>
+    <li>Polaroid Land Camera, Austin Prock : <a href="https://commons.wikimedia.org/wiki/File:Vintage_polaroid_camera_(Unsplash).jpg" rel="noopener">CC0</a>.</li>
+    <li>Chat noir de profil, Kiwiz1338 : <a href="https://commons.wikimedia.org/wiki/File:Cat_face_from_the_left.png" rel="noopener">CC0</a>.</li>
+    <li>Appareil Diana, James Bold : <a href="https://commons.wikimedia.org/wiki/File:Vintage_Camera_(Unsplash).jpg" rel="noopener">CC0</a>.</li>
+    <li>Rue Foch, Montpellier, Vpe : <a href="https://commons.wikimedia.org/wiki/File:Montpellier_rue_Foch.JPG" rel="noopener">domaine public</a>.</li>
+    <li>Place de la Comédie, Montpellier, carte postale des années 1920, Éditions Yvon : <a href="https://commons.wikimedia.org/wiki/File:Montpellier_-_Place_de_la_Com%C3%A9die_(_CP_Yvon).jpg" rel="noopener">domaine public</a>.</li>
+  </ul>
+</Page>

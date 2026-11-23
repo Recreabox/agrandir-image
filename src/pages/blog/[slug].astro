@@ -1,0 +1,78 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { TOOLS, SITE, COELUS } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post, posts } }));
+}
+const { post, posts } = Astro.props;
+const { Content } = await render(post);
+const d = post.data;
+const href = '/blog/' + post.id + '/';
+const tool = TOOLS.find((t) => t.href === d.tool) ?? TOOLS[0];
+const related = posts.filter((p: { id: string }) => p.id !== post.id).slice(0, 2);
+// Un seul appel à Coelus par article : si le texte se termine déjà par un lien vers coelus.fr, pas d'encart en plus.
+const ctaInBody = (post.body ?? '').includes('https://coelus.fr/');
+const fmtDate = (x: Date) => new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }).format(x);
+const iso = (x: Date) => x.toISOString().slice(0, 10);
+const canonical = SITE.url + href;
+const shareImage = SITE.url + '/og/agrandir-image.jpg';
+const jsonLd = [{
+  '@type': 'BlogPosting',
+  '@id': canonical + '#article',
+  headline: d.title,
+  description: d.description,
+  datePublished: iso(d.publishedAt),
+  dateModified: iso(d.updatedAt),
+  inLanguage: 'fr-FR',
+  image: { '@type': 'ImageObject', url: shareImage, width: 1200, height: 630 },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+  author: { '@type': 'Organization', name: COELUS.name, url: COELUS.url },
+  publisher: { '@id': COELUS.url + '#organisation' },
+}];
+---
+<Base title={d.seoTitle} description={d.description} crumbs={[{ name: 'Blog', href: '/blog/' }, { name: d.title, href }]} jsonLd={jsonLd} type="article">
+  <article class="post">
+    <p class="post__back"><a href="/blog/">← Blog</a></p>
+    <h1>{d.title}</h1>
+    <p class="post__meta">{d.author} · {fmtDate(d.publishedAt)} · {d.readingMinutes} min de lecture</p>
+    <div class="post__try">
+      <span>Outil gratuit : <strong>{tool.label}</strong>, sans inscription, 100 % local.</span>
+      <a class="btn btn-primary" href={tool.href}>Essayer</a>
+    </div>
+    <div class="prose post__body"><Content /></div>
+    {!ctaInBody && (
+      <aside class="post__cta" aria-label="Coelus">
+        <p>{d.cta.text}</p>
+        <a href={d.cta.href} rel="noopener">{d.cta.label} →</a>
+      </aside>
+    )}
+    {related.length > 0 && (
+      <nav class="post__rel" aria-labelledby="lire">
+        <h2 id="lire">À lire aussi</h2>
+        <ul>{related.map((p: { id: string; data: { title: string } }) => (<li><a href={'/blog/' + p.id + '/'}>{p.data.title}</a></li>))}</ul>
+      </nav>
+    )}
+  </article>
+</Base>
+
+<style>
+  .post { width: min(100% - 32px, var(--text)); margin: 0 auto; padding-top: 40px; }
+  .post__back a { color: var(--muted); font-size: 14px; text-decoration: none; }
+  .post__back a:hover { color: var(--primary); }
+  .post h1 { margin-top: 16px; font-size: 30px; line-height: 1.25; font-weight: 700; letter-spacing: -0.02em; }
+  .post__meta { margin-top: 10px; color: var(--muted); font-size: 14px; }
+  .post__try { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 24px; padding: 14px 16px; border-radius: var(--radius-lg); background: var(--primary-50); color: var(--ink-2); font-size: 14px; }
+  .post__body { margin-top: 32px; }
+  .post__body :global(p), .post__body :global(li) { font-size: 16px; color: var(--ink-2); }
+  .post__cta { margin-top: 40px; padding: 18px 20px; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--card); }
+  .post__cta p { color: var(--ink-2); font-size: 15px; }
+  .post__cta a { display: inline-block; margin-top: 8px; color: var(--primary); font-weight: 500; text-decoration: none; }
+  .post__rel { margin-top: 40px; }
+  .post__rel h2 { font-size: 16px; font-weight: 600; }
+  .post__rel ul { margin: 10px 0 0; padding-left: 1.1em; color: var(--muted); }
+  .post__rel a { color: var(--primary); font-size: 15px; }
+  @media (max-width: 640px) { .post h1 { font-size: 25px; } .post__try .btn { width: 100%; } }
+</style>

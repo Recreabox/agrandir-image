@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import Agrandisseur from '../components/Agrandisseur.svelte';
+import Faq from '../components/Faq.astro';
+import { SITE, COELUS } from '../lib/site';
+import { HOME, HOME_FEATURES } from '../data/tools';
+import { FAQ_HOME, faqJsonLd } from '../data/faq';
+
+const title = 'Agrandir une image sans perte de qualité – IA gratuite';
+const description = 'Agrandissez vos images ×2, ×3 ou ×4 avec l’IA, directement dans votre navigateur : gratuit, sans inscription, sans filigrane. Vos images restent chez vous.';
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    '@id': SITE.url + '/#outil',
+    name: 'Agrandir une image',
+    url: SITE.url + '/',
+    applicationCategory: 'MultimediaApplication',
+    operatingSystem: 'Navigateur web récent',
+    inLanguage: 'fr-FR',
+    isAccessibleForFree: true,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+    creator: { '@id': COELUS.url + '#organisation' },
+  },
+  faqJsonLd(FAQ_HOME),
+];
+---
+<Base title={title} description={description} jsonLd={jsonLd}>
+  <section class="hero wrap">
+    <h1>Agrandir une image avec l’IA</h1>
+    <p>Agrandissez vos photos et vos logos ×2, ×3 ou ×4 en quelques clics, gratuitement et sans inscription. <span class="accent">Traitement 100 % local</span></p>
+  </section>
+
+  <section class="wrap" aria-label="Outil">
+    <Agrandisseur client:load preset={HOME.preset} cta={HOME.cta} sample={HOME.sample} sampleName={HOME.sampleName} features={HOME_FEATURES} />
+  </section>
+
+  <div class="texts prose">
+    <h2>Agrandir une image en ligne, sans la rendre floue</h2>
+    <p>Une image trop petite devient floue dès qu’on l’agrandit : un logiciel classique se contente d’étirer les pixels existants. Cet outil utilise une intelligence artificielle qui redessine les détails à la nouvelle taille. Vos photos, logos et illustrations deviennent jusqu’à quatre fois plus grands tout en restant nets. Le tout gratuitement, sans inscription ni filigrane, avec un traitement 100 % local : vos images restent sur votre appareil.</p>
+
+    <h2>Pourquoi agrandir une image avec l’IA ?</h2>
+    <p>Pour réutiliser une photo trop petite sur un site, une boutique en ligne ou un réseau social, pour imprimer un souvenir en grand format, ou pour récupérer un logo dont il ne reste qu’une petite version. L’IA rend l’image plus nette et atténue le bruit et les traces de compression, là où un simple agrandissement donne un résultat flou.</p>
+
+    <h2>Comment fonctionne cet outil ?</h2>
+    <p>Importez une ou plusieurs images, choisissez l’agrandissement (×2, ×3 ou ×4) et le type d’image, puis lancez le traitement. Comparez le résultat avec l’original grâce au curseur avant / après, puis téléchargez votre image agrandie. La première fois, l’outil télécharge le modèle d’IA ; les fois suivantes, il démarre tout de suite.</p>
+
+    <h2>Quels formats d’image pouvez-vous agrandir ?</h2>
+    <p>L’outil accepte les formats courants : JPG, PNG, WebP, AVIF, GIF et BMP. Vous pouvez garder le format d’origine ou choisir JPG, PNG ou WebP. La transparence des PNG est conservée, ce qui est pratique pour les logos. Les photos HEIC d’iPhone s’ouvrent dans Safari ; ailleurs, convertissez-les d’abord en JPG.</p>
+
+    <h2>Quel agrandissement choisir ?</h2>
+    <p>Choisissez la taille dont vous avez besoin, pas forcément la plus grande. ×2 suffit pour un affichage plein écran ou un site web ; ×4 convient aux petites images et aux impressions en grand format. Pour un tirage papier, la page <a href="/agrandir-image-impression/">Agrandir pour imprimer</a> calcule directement la bonne taille selon le format choisi.</p>
+
+    <Faq items={FAQ_HOME} />
+  </div>
+</Base>

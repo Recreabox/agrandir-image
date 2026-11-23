@@ -1,0 +1,61 @@
+---
+import Logo from './Logo.astro';
+import { TOOLS } from '../lib/site';
+const path = Astro.url.pathname;
+---
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a class="hdr__logo" href="/" aria-label="Agrandir Image, accueil"><Logo class="hdr__svg" /></a>
+    <nav class="hdr__nav" aria-label="Navigation principale">
+      <details class="menu" data-menu>
+        <summary>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          Outils
+          <svg class="menu__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="menu__panel">
+          <p class="menu__title">Outils gratuits</p>
+          {TOOLS.map((t) => (
+            <a href={t.href} aria-current={path === t.href ? 'page' : undefined}>
+              <span class="menu__t">{t.label}</span>
+              <span class="menu__s">{t.sub}</span>
+            </a>
+          ))}
+        </div>
+      </details>
+      <a class="hdr__link" href="/blog/" aria-current={path.startsWith('/blog/') ? 'page' : undefined}>Blog</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .hdr__in { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 68px; }
+  .hdr__logo { display: block; flex: none; }
+  .hdr__logo :global(.hdr__svg) { height: 22px; width: auto; }
+  .hdr__nav { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+  .hdr__link, .menu summary { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; border-radius: var(--radius); color: var(--muted); text-decoration: none; cursor: pointer; }
+  .hdr__link:hover, .menu summary:hover, .hdr__link[aria-current='page'], .menu[open] summary { color: var(--ink); background: var(--subtle-2); }
+  .menu { position: relative; }
+  .menu summary { list-style: none; }
+  .menu summary::-webkit-details-marker { display: none; }
+  .menu summary svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .menu .menu__chev { width: 14px; height: 14px; transition: transform .15s; }
+  .menu[open] .menu__chev { transform: rotate(180deg); }
+  .menu__panel {
+    position: absolute; right: 0; top: calc(100% + 8px); z-index: 30;
+    width: 290px; max-width: calc(100vw - 32px); max-height: calc(100vh - 90px); overflow-y: auto;
+    padding: 6px; border: 1px solid var(--border); border-radius: var(--radius-lg);
+    background: var(--card); box-shadow: var(--shadow);
+  }
+  .menu__title { padding: 8px 10px 8px; margin-bottom: 4px; border-bottom: 1px solid var(--border); color: var(--muted); font-size: 12px; font-weight: 600; }
+  .menu__panel a { display: grid; gap: 1px; padding: 8px 10px; border-radius: var(--radius); text-decoration: none; }
+  .menu__panel a:hover { background: var(--subtle-2); }
+  .menu__panel a[aria-current='page'] { background: var(--primary-50); }
+  .menu__panel a[aria-current='page'] .menu__t { color: var(--primary); }
+  .menu__t { color: var(--ink); font-size: 14px; }
+  .menu__s { color: var(--muted); font-size: 12px; }
+  @media (max-width: 480px) {
+    .hdr__logo :global(.hdr__svg) { height: 17px; }
+    .hdr__nav { gap: 2px; }
+  }
+</style>

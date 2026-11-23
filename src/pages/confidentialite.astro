@@ -1,0 +1,18 @@
+---
+import Page from '../layouts/Page.astro';
+import { coelusLink } from '../lib/site';
+---
+<Page title="Confidentialité : vos images restent chez vous" description="Aucune image envoyée, aucun cookie, aucun compte : ce que fait Agrandir Image avec vos fichiers, et ce qu’il garde dans votre navigateur." h1="Confidentialité" slug="confidentialite">
+  <p><strong>En bref : vos images ne quittent jamais votre appareil.</strong> Le site ne dépose aucun cookie, ne demande aucun compte et n’affiche aucune publicité. Il compte seulement ses visites, avec un outil sans cookie (voir « Mesure d’audience »).</p>
+  <h2>Vos images</h2>
+  <p>Les images que vous importez sont lues, agrandies et enregistrées directement dans votre navigateur. Elles ne sont envoyées à aucun serveur. Le fichier agrandi est créé sur votre appareil et disparaît quand vous fermez la page. Les métadonnées de la photo d’origine (position GPS, appareil, date) ne sont pas recopiées.</p>
+  <h2>Ce que votre navigateur garde</h2>
+  <p>Au premier agrandissement, votre navigateur télécharge le modèle d’IA depuis notre site et le garde en mémoire pour les visites suivantes. Ce sont des fichiers techniques, identiques pour tout le monde, jamais vos images. Vous pouvez les effacer à tout moment en supprimant les données du site dans les réglages de votre navigateur.</p>
+  <h2>Mesure d’audience</h2>
+  <p>Pour savoir quelles pages servent, nous comptons les visites avec Rybbit, un outil de statistiques sans cookie que Coelus héberge lui-même. Il enregistre les pages vues, le pays, le type d’appareil et de navigateur, le site d’où vous venez et les erreurs techniques. Il ne conserve pas votre adresse IP, n’enregistre pas vos sessions et ne voit jamais vos images. Pour reconnaître une visite qui revient, il garde un identifiant aléatoire dans le stockage de votre navigateur, que vous pouvez effacer comme le reste. Ces données ne sont pas transmises à des tiers.</p>
+  <h2>Hébergement</h2>
+  <p>Le site est servi par Cloudflare. Comme tout hébergeur, Cloudflare traite des données techniques de connexion (adresse IP, navigateur, page demandée) pour acheminer les pages et protéger le service, selon sa <a href="https://www.cloudflare.com/fr-fr/privacypolicy/" rel="noopener">politique de confidentialité</a>. Nous ne les utilisons pas pour vous suivre.</p>
+  <h2>Contact</h2>
+  <p>Pour toute question sur vos données (RGPD, loi Informatique et Libertés), contactez l’éditeur du site, Coelus, via <a href={coelusLink('/contact/', 'confidentialite')}>coelus.fr/contact</a>.</p>
+  <p>Dernière mise à jour : 20 octobre 2026.</p>
+</Page>

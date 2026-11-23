@@ -1,0 +1,52 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Agrandisseur from '../components/Agrandisseur.svelte';
+import Faq from '../components/Faq.astro';
+import { TOOL_CONFIG } from '../data/tools';
+import { faqJsonLd } from '../data/faq';
+import { SITE, COELUS } from '../lib/site';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('outils');
+  return pages.map((page) => ({ params: { slug: page.id }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+const d = page.data;
+const cfg = TOOL_CONFIG[page.id];
+const href = '/' + page.id + '/';
+// Chapô suivi de la mention « Traitement 100 % local » (comme le site exemple), avec une ponctuation propre.
+const lede = d.lede.trim().replace(/[\s.]+$/, '');
+const sep = /[?!…]$/.test(lede) ? ' ' : '. ';
+const jsonLd: Record<string, unknown>[] = [
+  {
+    '@type': 'WebApplication',
+    name: d.h1,
+    url: SITE.url + href,
+    applicationCategory: 'MultimediaApplication',
+    operatingSystem: 'Navigateur web récent',
+    inLanguage: 'fr-FR',
+    isAccessibleForFree: true,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+    creator: { '@id': COELUS.url + '#organisation' },
+  },
+];
+if (d.faq.length) jsonLd.push(faqJsonLd(d.faq));
+---
+<Base title={d.title} description={d.description} crumbs={[{ name: d.navLabel, href }]} jsonLd={jsonLd}>
+  <section class="hero wrap">
+    <h1>{d.h1}</h1>
+    <p>{lede}{sep}<span class="accent">Traitement 100 % local</span></p>
+  </section>
+
+  <section class="wrap" aria-label="Outil">
+    <Agrandisseur client:load preset={cfg?.preset ?? {}} cta={cfg?.cta} sample={cfg?.sample} sampleName={cfg?.sampleName} />
+  </section>
+
+  <div class="texts">
+    <div class="prose"><Content /></div>
+    {d.faq.length > 0 && <Faq items={d.faq} />}
+  </div>
+</Base>
